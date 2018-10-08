@@ -41,130 +41,102 @@ which are represented with an hexadecimal value. All the operations that
 require two elements from the stack, are done in [RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation), 
 which means that the last operand is the first element that was taken out 
 from the stack:
-##### istore
-###### Operation
+#### istore
 Reads the following byte code as a **unsigned int**. Uses that value as the 
-index in the *variables array*, and pushes it in the *operands stack*.
-###### Syntax
-This command is represented with the value:
+index in the *variables array*, and pushes it in the *operands stack*. This 
+command is represented with the value:
 ```
 0x36
 ```
-##### iload
-###### Operation
+#### iload
 Reads the following byte code as a **unsigned int**. Uses that value as the 
 index in the variables array, and pops it from the *operands stack* into the 
-*variables array*.
-###### Syntax
-This command is represented with the value:
+*variables array*. This command is represented with the value:
 ```
 0x15
 ```
-##### bipush
-###### Operation
+#### bipush
 Reads the following byte code, extends it into **signed int** and pushes it 
-in the *operands stack*.
-###### Syntax
-This command is represented with the value:
+in the *operands stack*. This command is represented with the value:
 ```
 0x10
 ```
-##### dup
-###### Operation
-Duplicates the last element from the *operands stack* (without extracting it).
-###### Syntax
-This command is represented with the value:
+#### dup
+Duplicates the last element from the *operands stack* (without extracting it)
+. This command is represented with the value:
 ```
 0x59
 ```
-##### iand
-###### Operation
+#### iand
 Pops the last two elements from the *operands stack* and perform a bitwise 
 [AND](https://en.wikipedia.org/wiki/Bitwise_operation#AND) operation. Pushes 
-the result into the stack.
-###### Syntax
-This command is represented with the value:
+the result into the stack. This command is represented with the value:
 ```
 0x7E
 ```
-##### ixor
-###### Operation
+#### ixor
 Pops the last two elements from the *operands stack* and perform a bitwise 
 [XOR](https://en.wikipedia.org/wiki/Bitwise_operation#XOR) operation. Pushes 
-the result into the stack.
-###### Syntax
-This command is represented with the value:
+the result into the stack. This command is represented with the value:
 ```
 0x82
 ```
-##### ior
-###### Operation
+#### ior
 Pops the last two elements from the *operands stack* and perform a bitwise 
 [OR](https://en.wikipedia.org/wiki/Bitwise_operation#OR) operation. Pushes 
-the result into the stack.
-###### Syntax
-This command is represented with the value:
+the result into the stack. This command is represented with the value:
 ```
 0x80
 ```
-##### irem
-###### Operation
+#### irem
 Pops the last two elements from the *operands stack*, performs the division 
-between them and gets the remainder value. Pushes the result into the stack.
-###### Syntax
+between them and gets the remainder value. Pushes the result into the stack. 
 This command is represented with the value:
 ```
 0x70
 ```
-##### ineg
-###### Operation
+#### ineg
 Pops the last element from the *operands stack* and perform a NOT operation 
 but by using the [Two' Complement](https://en.wikipedia.org/wiki/Two%27s_complement)
-operation. Pushes the result into the stack.
-###### Syntax
-This command is represented with the value:
+operation. Pushes the result into the stack. This command is represented with
+ the value:
 ```
 0x74
 ```
-##### idiv
-###### Operation
+#### idiv
 Pops the last two elements from the *operands stack* and perform the division 
-between them. Pushes the result (*casted to int*) into the stack.
-###### Syntax
-This command is represented with the value:
+between them. Pushes the result (*casted to int*) into the stack. This 
+command is represented with the value:
 ```
 0x6C
 ```
-##### iadd
-###### Operation
+#### iadd
 Pops the last two elements from the *operands stack* and perform the 
-**Addition** operation. Pushes the result into the stack.
-###### Syntax
-This command is represented with the value:
+**Addition** operation. Pushes the result into the stack. This command is 
+represented with the value:
 ```
 0x60
 ```
-##### imul
-###### Operation
+#### imul
 Pops the last two elements from the *operands stack* and perform the 
-**Multiplication** operation. Pushes the result into the stack.
-###### Syntax
-This command is represented with the value:
+**Multiplication** operation. Pushes the result into the stack. This command 
+is represented with the value:
 ```
 0x68
 ```
-##### isub
-###### Operation
+#### isub
 Pops the last two elements from the *operands stack*, performs the 
 **Subtraction** between them and gets the result. Pushes the result into the 
-stack.
-###### Syntax
-This command is represented with the value:
+stack. This command is represented with the value:
 ```
 0x64
 ```
 ### Commands Extension
-There are more Byte Codes actually supported by the JVM.
+There are more [Byte Codes](https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings)
+actually supported by the JVM. These can be easily added by including a new 
+value in the `jvm_byte_code` enum from **jvm_utils.h**. Each enum is mapped 
+to a `operation_result` (function pointer that must be implemented) in the 
+`jvm_argument_detect()` function.
 
 ## Building and Running
 ### Build
@@ -175,7 +147,7 @@ There are more Byte Codes actually supported by the JVM.
 #### Server
 The server must be executed with the following syntax:
 ```
-./tp server ​<port>
+./remoteJVM server ​<port>
 ```
 ##### Standard Out
 The server will print the following in **stdout**:
@@ -186,7 +158,7 @@ Bytecode trace
 [byte_code_2]
 ...
 ```
-- The final status of the **variables array*, each one of them as 
+- The final status of the **variables array**, each one of them as 
 **hexadecimal** value with 8 digits:
 ```
 Variables dump
@@ -197,7 +169,7 @@ Variables dump
 #### Client
 The client must be executed with the following syntax:
 ```
-./tp client ​<host> <port>​ ​<N> ​[​<filename>​]
+./remoteJVM client ​<host> <port>​ ​<N> ​[​<filename>​]
 ```
 ##### Standard In
 The filename is **optional**. If no file is specified, **stdin** is taken as 
